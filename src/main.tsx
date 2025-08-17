@@ -1,10 +1,19 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App.tsx";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import "@styled/modern-normalize";
+import { Toaster } from "react-hot-toast";
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+const queryClient = new QueryClient();
+
+createRoot(document.getElementById("root") as HTMLElement).render(
+	<StrictMode>
+		<QueryClientProvider client={queryClient}>
+			<App />
+			<Toaster />
+			<ReactQueryDevtools initialIsOpen={false} />
+		</QueryClientProvider>
+	</StrictMode>
+);
