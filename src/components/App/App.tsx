@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import "./App.css";
-import SearchBar from "./components/SearchBar/SearchBar";
-import fetchMovies from "./services/fetchMovies";
-import type { Movie } from "./types/movie";
-import MovieGrid from "./components/MovieGrid/MovieGrid";
-import MovieModal from "./components/MovieModal/MovieModal";
-import Loader from "./components/Loader/Loader";
-import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
+import SearchBar from "../SearchBar/SearchBar";
+import fetchMovies from "../../services/movieService";
+import type { Movie } from "../../types/movie";
+import MovieGrid from "../MovieGrid/MovieGrid";
+import MovieModal from "../MovieModal/MovieModal";
+import Loader from "../Loader/Loader";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import css from "./App.module.css";
+
 // import { useQuery } from "@tanstack/react-query";
 
 function App() {
@@ -69,16 +70,18 @@ function App() {
 
 	return (
 		<>
-			<SearchBar handleSubmit={handleSubmit} />
-			{isLoading && <Loader />}
-			{isError && <ErrorMessage />}
-			<MovieGrid movies={movies} onClick={handleselectedMovie} />
-			{selectedMovie && (
-				<MovieModal
-					handleCloseModal={handleCloseModal}
-					selectedMovie={selectedMovie}
-				/>
-			)}
+			<div className={css.app}>
+				<SearchBar handleSubmit={handleSubmit} />
+				{isLoading && <Loader />}
+				{isError && <ErrorMessage />}
+				<MovieGrid movies={movies} onClick={handleselectedMovie} />
+				{selectedMovie && (
+					<MovieModal
+						handleCloseModal={handleCloseModal}
+						selectedMovie={selectedMovie}
+					/>
+				)}
+			</div>
 		</>
 	);
 }
