@@ -43,10 +43,8 @@ function App() {
 				}
 				setMovies(resultData.results);
 			} catch {
-				console.log("error");
 				setIsError(true);
 			} finally {
-				console.log("return");
 				setIsLoading(false);
 			}
 		};
