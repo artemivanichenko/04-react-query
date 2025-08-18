@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import SearchBar from "../SearchBar/SearchBar";
 import fetchMovies from "../../services/movieService";
 import type { Movie } from "../../types/movie";
@@ -9,23 +9,12 @@ import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import css from "./App.module.css";
 
-// import { useQuery } from "@tanstack/react-query";
-
 function App() {
 	const [query, setQuery] = useState("");
 	const [movies, setMovies] = useState<Movie[]>([]);
 	const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(false);
-
-	// const MoviesTanstack = () => {
-	// 	const MyQuery = useQuery({
-	// 		queryKey: ["movies"],
-	// 		queryFn: () => {
-	// 			console.log("fetch");
-	// 		},
-	// 	});
-	// };
 
 	const handleSubmit = (query: string) => {
 		setQuery(query);
@@ -48,7 +37,7 @@ function App() {
 			setIsError(false);
 			try {
 				const resultData = await fetchMovies(query);
-				if (resultData.results.length === 0) {
+				if (resultData?.results.length === 0) {
 					toast("No movies found for your request");
 					return;
 				}
@@ -63,23 +52,22 @@ function App() {
 		};
 
 		getMovies();
-		return () => {
-			setMovies([]);
-		};
+		// return () => {
+		// 	setMovies([]);
+		// };
 	}, [query]);
 
 	return (
 		<>
 			<div className={css.app}>
-				<SearchBar handleSubmit={handleSubmit} />
+				<SearchBar onSubmit={handleSubmit} />
+				<Toaster position="top-center" reverseOrder={false} />
 				{isLoading && <Loader />}
 				{isError && <ErrorMessage />}
-				<MovieGrid movies={movies} onClick={handleselectedMovie} />
+
+				<MovieGrid movies={movies} onSelect={handleselectedMovie} />
 				{selectedMovie && (
-					<MovieModal
-						handleCloseModal={handleCloseModal}
-						selectedMovie={selectedMovie}
-					/>
+					<MovieModal onClose={handleCloseModal} movie={selectedMovie} />
 				)}
 			</div>
 		</>

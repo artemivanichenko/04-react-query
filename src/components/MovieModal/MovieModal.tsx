@@ -1,23 +1,24 @@
 import { useEffect } from "react";
 import type { Movie } from "../../types/movie";
 import css from "./MovieModal.module.css";
+import { createPortal } from "react-dom";
 
 interface MovieModalProps {
-	selectedMovie: Movie;
-	handleCloseModal: () => void;
+	movie: Movie;
+	onClose: () => void;
 }
 
-const MovieModal = ({ selectedMovie, handleCloseModal }: MovieModalProps) => {
+const MovieModal = ({ movie, onClose }: MovieModalProps) => {
 	const handleBackgroundClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		if (e.target === e.currentTarget) {
-			handleCloseModal();
+			onClose();
 		}
 	};
 
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (e.key === "Escape") {
-				handleCloseModal();
+				onClose();
 			}
 		};
 		document.addEventListener("keydown", handleKeyDown);
@@ -26,9 +27,9 @@ const MovieModal = ({ selectedMovie, handleCloseModal }: MovieModalProps) => {
 			document.removeEventListener("keydown", handleKeyDown);
 			document.body.style.overflow = "";
 		};
-	}, [handleCloseModal]);
+	}, [onClose]);
 
-	return (
+	return createPortal(
 		<div
 			onClick={handleBackgroundClick}
 			className={css.backdrop}
@@ -36,30 +37,31 @@ const MovieModal = ({ selectedMovie, handleCloseModal }: MovieModalProps) => {
 			aria-modal="true">
 			<div className={css.modal}>
 				<button
-					onClick={handleCloseModal}
+					onClick={onClose}
 					className={css.closeButton}
 					aria-label="Close modal">
 					&times;
 				</button>
 				<img
-					src={`https://image.tmdb.org/t/p/w500/${selectedMovie.poster_path}`}
-					alt={selectedMovie.title}
+					src={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`}
+					alt={movie.title}
 					className={css.image}
 				/>
 				<div className={css.content}>
-					<h2>{selectedMovie.title}</h2>
-					<p>{selectedMovie.overview}</p>
+					<h2>{movie.title}</h2>
+					<p>{movie.overview}</p>
 					<p>
 						<strong>Release Date:</strong>
-						{selectedMovie.release_date}
+						{movie.release_date}
 					</p>
 					<p>
 						<strong>Rating:</strong>
-						{selectedMovie.vote_average}
+						{movie.vote_average}
 					</p>
 				</div>
 			</div>
-		</div>
+		</div>,
+		document.body
 	);
 };
 
