@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import "./App.css";
-import SearchBar from "./SearchBar/SearchBar";
+import SearchBar from "./components/SearchBar/SearchBar";
 import fetchMovies from "./services/fetchMovies";
 import type { Movie } from "./types/movie";
-import MovieGrid from "./MovieGrid/MovieGrid";
-import MovieModal from "./MovieModal/MovieModal";
-import Loader from "./Loader/Loader";
-import ErrorMessage from "./ErrorMessage/ErrorMessage";
+import MovieGrid from "./components/MovieGrid/MovieGrid";
+import MovieModal from "./components/MovieModal/MovieModal";
+import Loader from "./components/Loader/Loader";
+import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 // import { useQuery } from "@tanstack/react-query";
 
 function App() {
