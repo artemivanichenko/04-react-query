@@ -52,9 +52,6 @@ function App() {
 		};
 
 		getMovies();
-		// return () => {
-		// 	setMovies([]);
-		// };
 	}, [query]);
 
 	return (
