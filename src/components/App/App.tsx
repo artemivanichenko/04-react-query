@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
+import css from "./App.module.css";
 import toast, { Toaster } from "react-hot-toast";
-import SearchBar from "../SearchBar/SearchBar";
 import fetchMovies from "../../services/movieService";
 import type { Movie } from "../../types/movie";
+import SearchBar from "../SearchBar/SearchBar";
 import MovieGrid from "../MovieGrid/MovieGrid";
 import MovieModal from "../MovieModal/MovieModal";
 import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
-import css from "./App.module.css";
 
 function App() {
 	const [query, setQuery] = useState("");
