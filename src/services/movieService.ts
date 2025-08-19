@@ -16,8 +16,11 @@ const movieService = async (query: string): Promise<SearchResponse> => {
 		headers: { Authorization: `Bearer ${token}` },
 	};
 
-	const response = await axios.get<SearchResponse>(baseURL, config);
-	return response.data;
+	const { data } = await axios.get<SearchResponse>(baseURL, config);
+
+	console.log(data);
+
+	return data;
 };
 
 export default movieService;
