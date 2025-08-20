@@ -8,11 +8,14 @@ interface SearchResponse {
 	total_results: number;
 }
 
-const movieService = async (query: string): Promise<SearchResponse> => {
+const movieService = async (
+	query: string,
+	page: number
+): Promise<SearchResponse> => {
 	const baseURL = "https://api.themoviedb.org/3/search/movie";
 	const token = import.meta.env.VITE_TMDB_TOKEN;
 	const config = {
-		params: { query: query },
+		params: { query: query, page: page },
 		headers: { Authorization: `Bearer ${token}` },
 	};
 
